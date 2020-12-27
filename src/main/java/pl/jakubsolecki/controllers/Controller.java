@@ -1,4 +1,4 @@
-package pl.jakubsolecki.sample;
+package pl.jakubsolecki.controllers;
 
 import javafx.fxml.FXML;
 

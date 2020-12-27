@@ -1,4 +1,4 @@
-package pl.jakubsolecki.sample;
+package pl.jakubsolecki;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
