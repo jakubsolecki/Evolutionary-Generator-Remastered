@@ -1,6 +1,5 @@
 package pl.jakubsolecki.model;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -11,33 +10,6 @@ public enum BoardDirection {
     private final static List<BoardDirection> directions = Arrays.asList(N, NE, E, SE, S, SW, W, NW);
 
     public static BoardDirection nextDirection(BoardDirection currentDirection) {
-//        switch (prevDirection) {
-//            case N:
-//                return NE;
-//                break;
-//            case NE:
-//                return E;
-//                break;
-//            case E:
-//                return SE;
-//                break;
-//            case SE:
-//                return S;
-//                break;
-//            case S:
-//                return SW;
-//                break;
-//            case SW:
-//                return W;
-//                break;
-//            case W:
-//                return NW;
-//                break;
-//            case NW:
-//                return N;
-//                break;
-//        }
-
         return directions.get((directions.indexOf(currentDirection)) + 1 % directions.size());
     }
 
