@@ -1,6 +1,8 @@
 # Misc
 .idea/
 *.iml
+target/
+out/
 
 # Compiled class file
 *.class
