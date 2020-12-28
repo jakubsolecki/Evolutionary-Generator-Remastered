@@ -14,12 +14,14 @@ public class BoardEntityCollection {
     private final Multimap<Vector2D, Animal> animalMap = HashMultimap.create();
     private final Map<Vector2D, Grass> grassMap = new HashMap<>();
     private final Map<Vector2D, Stone> stoneMap = new HashMap<>();
+    private EntityIterator iterator;
 
-    public EntityIterator createIterator() {
-        return new EntityIterator();
+    public Iterator<Map.Entry<Vector2D, IBoardEntity>> iterator() {
+        iterator = new EntityIterator();
+        return iterator;
     }
 
-    private class EntityIterator {
+    private class EntityIterator implements Iterator<Map.Entry<Vector2D, IBoardEntity>> {
 
         Iterator<Map.Entry<Vector2D, IBoardEntity>> it;
         // TODO: find better solution
@@ -28,15 +30,13 @@ public class BoardEntityCollection {
         );
         private int nextCollection = 0;
 
-        public EntityIterator() {
-            listOfMaps.add(animalMap.entries());
-            listOfMaps.add(grassMap.entrySet());
-            listOfMaps.add(stoneMap.entrySet());
+        private EntityIterator() {
+            nexIterator();
         }
 
         private void nexIterator() {
             Collection<?> collection = listOfMaps.get(nextCollection);
-            if (collection == animalMap.entries()) {
+            if (nextCollection == 0) {
                 it = animalMap.entries()
                         .stream()
                         .map(e -> {
@@ -65,26 +65,32 @@ public class BoardEntityCollection {
                         })
                         .collect(Collectors.toCollection(ArrayList::new))
                         .iterator();
+                nextCollection++;
             } else {
-//                it = listOfMaps.get(nextCollection++).iterator();
-                it = listOfMaps.get(nextCollection).iterator();
+                it = listOfMaps.get(nextCollection++).iterator();
             }
 
         }
 
         public boolean isLast() {
-            return nextCollection < 2;
+            return nextCollection == listOfMaps.size();
         }
 
-        public Optional<Map.Entry<Vector2D, IBoardEntity>> next() {
+        @Override
+        public boolean hasNext() {
+            if (isLast()) return it.hasNext();
+            else return true;
+
+        }
+
+        @Override
+        public Map.Entry<Vector2D, IBoardEntity> next() {
 
             if (!isLast() && !it.hasNext()) {
                 nexIterator();
-            } else if (isLast() && !it.hasNext()) {
-                return Optional.empty();
             }
 
-            return Optional.of(it.next());
+            return it.next();
         }
     }
 
