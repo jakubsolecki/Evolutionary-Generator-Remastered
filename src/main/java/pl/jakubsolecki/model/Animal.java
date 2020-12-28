@@ -1,8 +1,10 @@
 package pl.jakubsolecki.model;
 
+import lombok.Builder;
 import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+//@RequiredArgsConstructor
+@Builder
 public class Animal implements IBoardEntity {
 
     private Vector2D position;

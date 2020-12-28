@@ -1,6 +1,6 @@
 package pl.jakubsolecki.service;
 
-import com.google.common.collect.LinkedHashMultimap;
+import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
 import pl.jakubsolecki.model.*;
@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BoardEntityCollection {
 
-    private final Multimap<Vector2D, Animal> animalMap = LinkedHashMultimap.create();
+    private final Multimap<Vector2D, Animal> animalMap = HashMultimap.create();
     private final Map<Vector2D, Grass> grassMap = new HashMap<>();
     private final Map<Vector2D, Stone> stoneMap = new HashMap<>();
 
@@ -22,17 +22,21 @@ public class BoardEntityCollection {
     private class EntityIterator {
 
         Iterator<Map.Entry<Vector2D, IBoardEntity>> it;
-//        private final List<Collection> listOfMaps = Arrays.asList(animalMap.entries(), grassMap.entrySet(), stoneMap.entrySet());
-        private List<Collection> listOfMaps = new LinkedList<>();
+        // TODO: find better solution
+        private final List<Collection> listOfMaps = Arrays.asList(
+                animalMap.entries(), grassMap.entrySet(), stoneMap.entrySet()
+        );
         private int nextCollection = 0;
 
         public EntityIterator() {
             listOfMaps.add(animalMap.entries());
+            listOfMaps.add(grassMap.entrySet());
+            listOfMaps.add(stoneMap.entrySet());
         }
 
         private void nexIterator() {
             Collection<?> collection = listOfMaps.get(nextCollection);
-            if (collection == animalMap.entries()){
+            if (collection == animalMap.entries()) {
                 it = animalMap.entries()
                         .stream()
                         .map(e -> {
@@ -61,9 +65,9 @@ public class BoardEntityCollection {
                         })
                         .collect(Collectors.toCollection(ArrayList::new))
                         .iterator();
-            }
-            else {
-                it = listOfMaps.get(nextCollection++).iterator();
+            } else {
+//                it = listOfMaps.get(nextCollection++).iterator();
+                it = listOfMaps.get(nextCollection).iterator();
             }
 
         }
@@ -76,37 +80,60 @@ public class BoardEntityCollection {
 
             if (!isLast() && !it.hasNext()) {
                 nexIterator();
-            }
-            else if (isLast() && !it.hasNext()) {
+            } else if (isLast() && !it.hasNext()) {
                 return Optional.empty();
             }
 
-                return Optional.of(it.next());
-        }
-
-        public boolean hasKey(Vector2D pos) {
-            return animalMap.containsKey(pos) || grassMap.containsKey(pos) || stoneMap.containsKey(pos);
-        }
-
-        public List<IBoardEntity> entitiesAt(Vector2D pos) {
-            List<IBoardEntity> entities = new ArrayList<>(animalMap.get(pos));
-            entities.add(grassMap.get(pos));
-            entities.add(stoneMap.get(pos));
-
-            return entities;
-        }
-
-        public void remove(IBoardEntity entity) {
-            if (entity instanceof Animal) {
-                animalMap.remove(entity.getPosition(), entity);
-            }
-            else if (entity instanceof Grass){
-                grassMap.remove(entity.getPosition());
-            }
-            else if (entity instanceof Stone) {
-                stoneMap.remove(entity.getPosition());
-            }
+            return Optional.of(it.next());
         }
     }
+
+    public boolean hasKey(Vector2D pos) {
+        return animalMap.containsKey(pos) || grassMap.containsKey(pos) || stoneMap.containsKey(pos);
+    }
+
+    public List<IBoardEntity> entitiesAt(Vector2D pos) {
+
+        List<IBoardEntity> entities = new ArrayList<>();
+
+        if (animalMap.containsKey(pos)) {
+            entities.addAll(animalMap.get(pos));
+        }
+
+        if (grassMap.containsKey(pos)) {
+            entities.add(grassMap.get(pos));
+        }
+
+        if (stoneMap.containsKey(pos)) {
+            entities.add(stoneMap.get(pos));
+        }
+
+        return entities;
+    }
+
+    public void add(IBoardEntity entity) {
+        if (entity instanceof Animal) {
+            animalMap.put(entity.getPosition(), (Animal) entity);
+        }
+        else if (entity instanceof Grass){
+            grassMap.put(entity.getPosition(), (Grass) entity);
+        }
+        else if (entity instanceof Stone) {
+            stoneMap.put(entity.getPosition(), (Stone) entity);
+        }
+    }
+
+    public void remove(IBoardEntity entity) {
+        if (entity instanceof Animal) {
+            animalMap.remove(entity.getPosition(), entity);
+        }
+        else if (entity instanceof Grass){
+            grassMap.remove(entity.getPosition());
+        }
+        else if (entity instanceof Stone) {
+            stoneMap.remove(entity.getPosition());
+        }
+    }
+
 
 }
