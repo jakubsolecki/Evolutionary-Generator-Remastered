@@ -3,11 +3,10 @@ package pl.jakubsolecki.service;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import org.checkerframework.checker.nullness.Opt;
 import pl.jakubsolecki.model.*;
 
 import java.util.*;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 public class BoardEntityCollection {
@@ -116,5 +115,12 @@ public class BoardEntityCollection {
         }
     }
 
+    public Optional<Grass> grassAt(Vector2D pos) {
+        return grassMap.containsKey(pos) ? Optional.of(grassMap.get(pos)) : Optional.empty();
+    }
+
+    public Optional<Stone> stoneAt(Vector2D pos) {
+        return stoneMap.containsKey(pos) ? Optional.of(stoneMap.get(pos)) : Optional.empty();
+    }
 
 }
