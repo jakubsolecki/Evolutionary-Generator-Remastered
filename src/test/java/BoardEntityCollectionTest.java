@@ -4,10 +4,7 @@ import org.mockito.Mockito;
 import pl.jakubsolecki.model.*;
 import pl.jakubsolecki.service.BoardEntityCollection;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -118,6 +115,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void iteratorTest() {
         // given
+        List<IBoardEntity> resList = new LinkedList<>();
+
         List<Animal> animals = Arrays.asList(
                 Mockito.mock(Animal.class),
                 Mockito.mock(Animal.class),
@@ -145,8 +144,15 @@ public class BoardEntityCollectionTest {
 
         // then
         while (it.hasNext()) {
-            System.out.println(it.next().getValue());
+            IBoardEntity res = it.next().getValue();
+            System.out.println(res); // just for sure
+            resList.add(res);
         }
+
+        assertTrue(resList.containsAll(animals));
+        assertTrue(resList.contains(grass));
+        assertTrue(resList.contains(stone));
+        assertEquals(5, resList.size());
     }
 
 }
