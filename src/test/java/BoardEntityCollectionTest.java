@@ -155,4 +155,47 @@ public class BoardEntityCollectionTest {
         assertEquals(5, resList.size());
     }
 
+    @Test
+    public void animalIteratorTest() {
+        List<IBoardEntity> resList = new LinkedList<>();
+
+        List<Animal> animals = Arrays.asList(
+                Mockito.mock(Animal.class),
+                Mockito.mock(Animal.class),
+                Mockito.mock(Animal.class)
+        );
+
+        Grass grass = Mockito.mock(Grass.class);
+        when(grass.getPosition()).thenReturn(new Vector2D(5, 5));
+
+        Stone stone = Mockito.mock(Stone.class);
+        when(stone.getPosition()).thenReturn(new Vector2D(8, 8));
+
+        // when
+        AtomicInteger i = new AtomicInteger();
+        animals.forEach(a -> {
+            when(a.getPosition()).thenReturn(new Vector2D(i.get(), i.get()));
+            i.getAndIncrement();
+
+            entityCollection.add(a);
+        });
+        entityCollection.add(grass);
+        entityCollection.add(stone);
+
+        Iterator<Map.Entry<Vector2D, IBoardEntity>> it = entityCollection.animalIterator();
+
+        // then
+        while (it.hasNext()) {
+            IBoardEntity res = it.next().getValue();
+            System.out.println(res); // just for sure
+            resList.add(res);
+        }
+
+        assertTrue(resList.containsAll(animals));
+        assertFalse(resList.contains(grass));
+        assertFalse(resList.contains(stone));
+        assertEquals(3, resList.size());
+    }
+
+
 }

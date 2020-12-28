@@ -3,6 +3,7 @@ package pl.jakubsolecki.service;
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.Multimap;
 import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 import pl.jakubsolecki.model.*;
 
 import java.util.*;
@@ -21,10 +22,17 @@ public class BoardEntityCollection {
         return iterator;
     }
 
+    public Iterator<Map.Entry<Vector2D, IBoardEntity>> animalIterator() {
+        iterator = new EntityIterator();
+        iterator.animalOnlyIterator = true;
+        return iterator;
+    }
+
     private class EntityIterator implements Iterator<Map.Entry<Vector2D, IBoardEntity>> {
 
-        Iterator<Map.Entry<Vector2D, IBoardEntity>> it;
-        // TODO: find better solution
+        private boolean animalOnlyIterator = false;
+        private Iterator<Map.Entry<Vector2D, IBoardEntity>> it;
+        // TODO: find better solution?
         private final List<Collection> listOfMaps = Arrays.asList(
                 animalMap.entries(), grassMap.entrySet(), stoneMap.entrySet()
         );
@@ -35,50 +43,17 @@ public class BoardEntityCollection {
         }
 
         private void nexIterator() {
-            Collection<?> collection = listOfMaps.get(nextCollection);
-            if (nextCollection == 0) {
-                it = animalMap.entries()
-                        .stream()
-                        .map(e -> {
-                            Map.Entry<Vector2D, IBoardEntity> entity = new Map.Entry<Vector2D, IBoardEntity>() {
-                                private Vector2D key = e.getKey();
-                                private IBoardEntity entity = e.getValue();
-
-                                @Override
-                                public Vector2D getKey() {
-                                    return key;
-                                }
-
-                                @Override
-                                public IBoardEntity getValue() {
-                                    return entity;
-                                }
-
-                                @Override
-                                public IBoardEntity setValue(IBoardEntity value) {
-                                    entity = value;
-                                    key = value.getPosition();
-                                    return value;
-                                }
-                            };
-                            return entity;
-                        })
-                        .collect(Collectors.toCollection(ArrayList::new))
-                        .iterator();
+                it = listOfMaps.get(nextCollection).iterator();
                 nextCollection++;
-            } else {
-                it = listOfMaps.get(nextCollection++).iterator();
-            }
-
         }
 
-        public boolean isLast() {
+        private boolean isLast() {
             return nextCollection == listOfMaps.size();
         }
 
         @Override
         public boolean hasNext() {
-            if (isLast()) return it.hasNext();
+            if (isLast() || animalOnlyIterator) return it.hasNext();
             else return true;
 
         }
