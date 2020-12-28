@@ -2,11 +2,13 @@ package pl.jakubsolecki.model;
 
 import com.google.common.collect.LinkedListMultimap;
 import com.google.common.collect.Multimap;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 
 import java.util.HashMap;
 import java.util.Map;
 
+@AllArgsConstructor
 public class WorldBoard {
 
     private final Vector2D TOP_RIGHT_CORNER;
@@ -23,12 +25,12 @@ public class WorldBoard {
     private final Map<Vector2D, Grass> grassMap = new HashMap<>();
     private final Map<Vector2D, Stone> stoneMap = new HashMap<>();
 
-    public WorldBoard(int WIDTH, int HEIGHT, int JUNGLE_WIDTH, int JUNGLE_HEIGHT) {
-        this.WIDTH = WIDTH;
-        this.HEIGHT = HEIGHT;
-        this.JUNGLE_WIDTH = JUNGLE_WIDTH;
-        this.JUNGLE_HEIGHT = JUNGLE_HEIGHT;
-    }
+//    public WorldBoard(int WIDTH, int HEIGHT, int JUNGLE_WIDTH, int JUNGLE_HEIGHT) {
+//        this.WIDTH = WIDTH;
+//        this.HEIGHT = HEIGHT;
+//        this.JUNGLE_WIDTH = JUNGLE_WIDTH;
+//        this.JUNGLE_HEIGHT = JUNGLE_HEIGHT;
+//    }
 
 //    public IBoardEntity objectAt(Vector2D coords) {
 //
@@ -46,4 +48,9 @@ public class WorldBoard {
     public void addStone(Stone stone) {
         stoneMap.put(stone.getPosition(), stone);
     }
+
+//    public IBoardEntity ObjectAt(Vector2D pos) {
+//
+//    }
+
 }
