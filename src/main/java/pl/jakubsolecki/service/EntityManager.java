@@ -12,7 +12,7 @@ import java.util.Random;
 public class EntityManager {
 
     private final WorldBoard board;
-    private final Random random = new Random();
+    private static final Random random = new Random();
 
     public void allEat() {
         Iterator<Map.Entry<Vector2D, IBoardEntity>> aIt = board.getEntityCollection().animalIterator();
@@ -36,34 +36,55 @@ public class EntityManager {
         }
     }
 
-    public boolean spawnAnimal(Vector2D pos) {
+    public boolean spawnAnimal(int startEnergy, Vector2D pos) {
         if (board.getEntityCollection().hasKey(pos)) {
             return false;
         }
 
-        newAnimal(pos);
+        newAnimal(pos, startEnergy);
         return true;
     }
 
-    public void spawnAnimal() {
-
+    public void spawnAnimal(int startEnergy) {
         Vector2D vect;
-
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
             vect = new Vector2D(x, y);
         } while (board.getEntityCollection().hasKey(vect));
 
-        newAnimal(vect);
+        newAnimal(vect, startEnergy);
     }
 
-    private void newAnimal(Vector2D pos) {
-        // TODO
+    private void newAnimal(Vector2D pos, int startEnergy) {
+        BoardDirection direction = BoardDirection.randomDirection();
+        Animal animal = new Animal(
+                pos,
+                startEnergy,
+                direction
+        );
+
+        board.getEntityCollection().add(animal);
     }
 
     public void spawnGrass() {
-        // TODO
+        Vector2D vect;
+        do {
+            int x = random.nextInt(board.getWIDTH());
+            int y = random.nextInt(board.getHEIGHT());
+            vect = new Vector2D(x, y);
+        } while (board.getEntityCollection().hasKey(vect));
+
+        // TODO different energy for jungle grass
+
+        Grass grass = new Grass(
+                random.nextInt(
+                        board.getGRASS_MAX_ENERGY() - board.getGRASS_MIN_ENERGY()
+                ) + board.getGRASS_MIN_ENERGY(),
+                vect
+        );
+
+        board.getEntityCollection().add(grass);
     }
 
     public void spawnStone() {

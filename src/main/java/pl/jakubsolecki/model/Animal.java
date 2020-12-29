@@ -1,16 +1,17 @@
 package pl.jakubsolecki.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
-//@RequiredArgsConstructor
-@Builder
+@RequiredArgsConstructor
 public class Animal implements IBoardEntity {
 
-    private Vector2D position;
-    private int energy;
-    private int age;
-    private BoardDirection direction;
+    @NonNull private Vector2D position;
+    @NonNull private int energy;
+    private int age = 0;
+    @NonNull private BoardDirection direction;
 
     @Override
     public boolean canMove() {
