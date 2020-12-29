@@ -1,12 +1,10 @@
 package pl.jakubsolecki.model;
 
 import lombok.EqualsAndHashCode;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
 @EqualsAndHashCode
-@Getter
 public class Vector2D {
 
     public final int X;
@@ -50,5 +48,24 @@ public class Vector2D {
      */
     public boolean isUpperRight(Vector2D other) {
         return this.X >= other.X && this.Y >= other.Y;
+    }
+    
+    protected Vector2D translateToBoard(int width, int height) {
+        int newX = this.X;
+        int newY = this.Y;
+
+        if (this.X < 0) {
+            newX = width;
+        } else if (this.X > width) {
+            newX = 0;
+        }
+
+        if (this.Y < 0) {
+            newY = height;
+        } else if (this.Y > height) {
+            newY = 0;
+        }
+
+        return new Vector2D(newX, newY);
     }
 }
