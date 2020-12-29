@@ -30,4 +30,25 @@ public class Vector2D {
         return new Vector2D(x, y);
     }
 
+    /**
+     * Checks whether method invoker is to the left and down of the other Vector2D object.
+     * Uses weak inequalities.
+     *
+     * @param other Vector2D instance that the method owner is being compared with
+     * @return true if vector belongs to the square with top-right corner in other, otherwise false
+     */
+    public boolean isLowerLeft(Vector2D other) {
+        return this.X <= other.X && this.Y <= other.Y;
+    }
+
+    /**
+     * Checks whether method invoker is to the right and up of the other Vector2D object.
+     * Uses weak inequalities.
+     *
+     * @param other Vector2D instance that the method owner is being compared with
+     * @return true if vector belongs to the square with bottom-left corner in other, otherwise false
+     */
+    public boolean isUpperRight(Vector2D other) {
+        return this.X >= other.X && this.Y >= other.Y;
+    }
 }

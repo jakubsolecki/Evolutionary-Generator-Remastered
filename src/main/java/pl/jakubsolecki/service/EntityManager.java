@@ -36,6 +36,16 @@ public class EntityManager {
         }
     }
 
+    public void removeDeadAnimals() {
+        Iterator<Map.Entry<Vector2D, IBoardEntity>> aIt = board.getEntityCollection().animalIterator();
+        while (aIt.hasNext()) {
+            Animal animal = (Animal) aIt.next().getValue();
+            if (!animal.isAlive()) {
+                board.getEntityCollection().remove(animal);
+            }
+        }
+    }
+
     public boolean spawnAnimal(int startEnergy, Vector2D pos) {
         if (board.getEntityCollection().hasKey(pos)) {
             return false;
@@ -75,19 +85,31 @@ public class EntityManager {
             vect = new Vector2D(x, y);
         } while (board.getEntityCollection().hasKey(vect));
 
-        // TODO different energy for jungle grass
+        int min = board.getGRASS_MIN_ENERGY();
+        int max = board.getGRASS_MAX_ENERGY();
+        int energy = random.nextInt(
+                board.getGRASS_MAX_ENERGY() - board.getGRASS_MIN_ENERGY()
+        ) + board.getGRASS_MIN_ENERGY();
 
-        Grass grass = new Grass(
-                random.nextInt(
-                        board.getGRASS_MAX_ENERGY() - board.getGRASS_MIN_ENERGY()
-                ) + board.getGRASS_MIN_ENERGY(),
-                vect
-        );
+        if (board.isInJungle(vect)) {
+            energy *= board.getJUNGLE_FACTOR();
+        }
+
+        Grass grass = new Grass(energy, vect);
 
         board.getEntityCollection().add(grass);
     }
 
     public void spawnStone() {
-        // TODO
+        Vector2D vect;
+        do {
+            int x = random.nextInt(board.getWIDTH());
+            int y = random.nextInt(board.getHEIGHT());
+            vect = new Vector2D(x, y);
+        } while (board.getEntityCollection().hasKey(vect));
+
+        Stone stone = new Stone(vect);
+
+        board.getEntityCollection().add(stone);
     }
 }

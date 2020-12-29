@@ -8,21 +8,22 @@ import pl.jakubsolecki.service.BoardEntityCollection;
 @Getter
 public class WorldBoard {
 
-    private final Vector2D TOP_RIGHT_CORNER;
-    private final Vector2D TOP_LEFT_CORNER;
-    private final Vector2D BOTTOM_RIGHT_CORNER;
-    private final Vector2D BOTTOM_LEFT_CORNER;
-    private final int WIDTH;
-    private final int HEIGHT;
+    private final Vector2D TOP_RIGHT;
+    private final Vector2D TOP_LEFT;
+    private final Vector2D BOTTOM_RIGHT;
+    private final Vector2D BOTTOM_LEFT;
+    public final int WIDTH;
+    public final int HEIGHT;
     // TODO: jungle corner coordinates?
+    private final Vector2D JUNGLE_TOP_RIGHT;
+    private final Vector2D JUNGLE_BOTTOM_LEFT;
     private final int JUNGLE_WIDTH;
     private final int JUNGLE_HEIGHT;
 
     // for double-sided slider
     private final int GRASS_MIN_ENERGY;
     private final int GRASS_MAX_ENERGY;
-    private final int JUNGLE_MIN_ENERGY;
-    private final int JUNGLE_MAX_ENERGY;
+    private final int JUNGLE_FACTOR;
 
     private final BoardEntityCollection entityCollection;
 
@@ -32,6 +33,6 @@ public class WorldBoard {
 
     public boolean isInJungle(Vector2D pos) {
         // TODO
-        return false;
+        return pos.isLowerLeft(JUNGLE_TOP_RIGHT) && pos.isUpperRight(JUNGLE_BOTTOM_LEFT);
     }
 }
