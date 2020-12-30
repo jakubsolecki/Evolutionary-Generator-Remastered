@@ -24,6 +24,7 @@ public class Animal implements IBoardEntity {
 
     // TODO: consider moving to movement manager
     public void changePosition() {
+        // TODO check whether it is possible to move
         position = position.add(BoardDirection.toUnitVector2D(direction));
     }
 

@@ -18,17 +18,11 @@ public class WorldBoard {
     private final int JUNGLE_WIDTH;
     private final int JUNGLE_HEIGHT;
 
-    // for double-sided slider
     private final int GRASS_MIN_ENERGY;
     private final int GRASS_MAX_ENERGY;
-
-    private final int JUNGLE_FACTOR;
+    private final int JUNGLE_ENERGY_FACTOR;
 
     private final BoardEntityCollection entityCollection;
-
-    public void add(IBoardEntity entity) {
-        // TODO ?
-    }
 
     public boolean isInJungle(Vector2D pos) {
         return pos.isLowerLeft(JUNGLE_TOP_RIGHT) && pos.isUpperRight(JUNGLE_BOTTOM_LEFT);

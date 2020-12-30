@@ -50,6 +50,10 @@ public class EntityManager {
         }
     }
 
+    public void moveAnimals() {
+        // TODO
+    }
+
     public boolean spawnAnimal(int startEnergy, Vector2D pos) {
         if (board.isOccupied(pos)) {
             return false;
@@ -96,7 +100,7 @@ public class EntityManager {
         ) + board.getGRASS_MIN_ENERGY();
 
         if (board.isInJungle(vect)) {
-            energy *= board.getJUNGLE_FACTOR();
+            energy *= board.getJUNGLE_ENERGY_FACTOR();
         }
 
         Grass grass = new Grass(energy, vect);
