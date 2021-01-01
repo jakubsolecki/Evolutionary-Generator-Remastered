@@ -2,6 +2,7 @@ package pl.jakubsolecki.service;
 
 import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 import java.util.Iterator;
 import java.util.Map;

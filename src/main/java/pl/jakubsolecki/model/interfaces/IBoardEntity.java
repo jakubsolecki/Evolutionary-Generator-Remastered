@@ -1,4 +1,6 @@
-package pl.jakubsolecki.model;
+package pl.jakubsolecki.model.interfaces;
+
+import pl.jakubsolecki.model.Vector2D;
 
 public interface IBoardEntity {
 

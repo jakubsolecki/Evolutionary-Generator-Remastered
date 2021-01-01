@@ -4,6 +4,7 @@ import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
 import lombok.RequiredArgsConstructor;
 import pl.jakubsolecki.model.*;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 import java.util.*;
 

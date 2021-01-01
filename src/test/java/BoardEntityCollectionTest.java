@@ -3,6 +3,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.jakubsolecki.model.*;
 import pl.jakubsolecki.containers.BoardEntityCollection;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -22,8 +23,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void addAnimalTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Animal animal = Mockito.mock(Animal.class);
+        var pos = new Vector2D(1, 1);
+        var animal = Mockito.mock(Animal.class);
         when(animal.getPosition()).thenReturn(pos);
 
         // when
@@ -37,8 +38,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void addGrassTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Grass grass = Mockito.mock(Grass.class);
+        var pos = new Vector2D(1, 1);
+        var grass = Mockito.mock(Grass.class);
         when(grass.getPosition()).thenReturn(pos);
 
         // when
@@ -52,8 +53,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void addStoneTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Stone stone = Mockito.mock(Stone.class);
+        var pos = new Vector2D(1, 1);
+        var stone = Mockito.mock(Stone.class);
         when(stone.getPosition()).thenReturn(pos);
 
         // when
@@ -67,8 +68,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void removeAnimalTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Animal animal = Mockito.mock(Animal.class);
+        var pos = new Vector2D(1, 1);
+        var animal = Mockito.mock(Animal.class);
         when(animal.getPosition()).thenReturn(pos);
 
         // when
@@ -83,8 +84,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void removeGrassTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Grass grass = Mockito.mock(Grass.class);
+        var pos = new Vector2D(1, 1);
+        var grass = Mockito.mock(Grass.class);
         when(grass.getPosition()).thenReturn(pos);
 
         // when
@@ -99,8 +100,8 @@ public class BoardEntityCollectionTest {
     @Test
     public void removeStoneTest() {
         // given
-        Vector2D pos = new Vector2D(1, 1);
-        Stone stone = Mockito.mock(Stone.class);
+        var pos = new Vector2D(1, 1);
+        var stone = Mockito.mock(Stone.class);
         when(stone.getPosition()).thenReturn(pos);
 
         // when
@@ -123,10 +124,10 @@ public class BoardEntityCollectionTest {
                 Mockito.mock(Animal.class)
         );
 
-        Grass grass = Mockito.mock(Grass.class);
+        var grass = Mockito.mock(Grass.class);
         when(grass.getPosition()).thenReturn(new Vector2D(5, 5));
 
-        Stone stone = Mockito.mock(Stone.class);
+        var stone = Mockito.mock(Stone.class);
         when(stone.getPosition()).thenReturn(new Vector2D(8, 8));
 
         // when
@@ -165,10 +166,10 @@ public class BoardEntityCollectionTest {
                 Mockito.mock(Animal.class)
         );
 
-        Grass grass = Mockito.mock(Grass.class);
+        var grass = Mockito.mock(Grass.class);
         when(grass.getPosition()).thenReturn(new Vector2D(5, 5));
 
-        Stone stone = Mockito.mock(Stone.class);
+        var stone = Mockito.mock(Stone.class);
         when(stone.getPosition()).thenReturn(new Vector2D(8, 8));
 
         // when

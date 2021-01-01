@@ -1,8 +1,9 @@
 package pl.jakubsolecki.service;
 
-import lombok.RequiredArgsConstructor;
+import com.google.inject.Inject;
 import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 import java.util.*;
 
@@ -13,6 +14,7 @@ public class EntityManager {
     private static final Random random = new Random();
     private final int reproduceEnergy;
 
+    @Inject
     public EntityManager(WorldBoard board, int reproduceEnergy) {
         this.board = board;
         this.reproduceEnergy = reproduceEnergy;
@@ -57,9 +59,17 @@ public class EntityManager {
         while (aIt.hasNext()) {
             Animal animal = (Animal) aIt.next().getValue();
             List<IBoardEntity> entities = board.getEntityCollection().entitiesAt(animal.getPosition());
+            boolean hasGrass = false;
 
-            if ((entities.size() == 3 && entities.contains(Grass.class)) ||
-                (entities.size() == 2 && !entities.contains(Grass.class))) {
+            for (IBoardEntity e : entities) {
+                if (e instanceof Grass) {
+                    hasGrass = true;
+                    break;
+                }
+            }
+            
+            if ((entities.size() == 3 && hasGrass) ||
+                (entities.size() == 2 && !hasGrass)) {
                 Iterator<IBoardEntity> it = entities.iterator();
                 ArrayList<Animal> animalPair = new ArrayList<>();
                 int i = 0;

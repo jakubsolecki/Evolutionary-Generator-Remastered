@@ -1,6 +1,7 @@
 package pl.jakubsolecki.model;
 
 import lombok.*;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 @RequiredArgsConstructor
 @Getter
@@ -9,7 +10,8 @@ public class Animal implements IBoardEntity {
     @NonNull
     @Setter
     private Vector2D position;
-    @NonNull private int energy;
+    @NonNull
+    private int energy;
     private int age = 0;
     @NonNull private BoardDirection direction;
 

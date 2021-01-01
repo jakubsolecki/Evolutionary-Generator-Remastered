@@ -2,6 +2,7 @@ package pl.jakubsolecki.model;
 
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
+import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 @RequiredArgsConstructor
 public class Grass implements IBoardEntity {

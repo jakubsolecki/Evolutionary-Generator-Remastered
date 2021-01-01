@@ -10,8 +10,8 @@ public class WorldBoard {
 
     private final Vector2D TOP_RIGHT;
     private final Vector2D BOTTOM_LEFT;
-    public final int WIDTH;
-    public final int HEIGHT;
+    private final int WIDTH;
+    private final int HEIGHT;
 
     private final Vector2D JUNGLE_TOP_RIGHT;
     private final Vector2D JUNGLE_BOTTOM_LEFT;
