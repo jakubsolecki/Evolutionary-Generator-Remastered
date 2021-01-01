@@ -83,21 +83,22 @@ public class EntityManager {
 
     public void spawnGrass() {
         Vector2D vect;
+        double tries = 0;
+        double boardArea = board.getHEIGHT()*board.getWIDTH();
+        double jungleArea = board.getJUNGLE_HEIGHT()*board.getJUNGLE_WIDTH();
+        double regularGrassArea = boardArea - jungleArea;
+        double targetArea = (jungleArea/regularGrassArea)*boardArea;
+
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
             vect = new Vector2D(x, y);
-        } while (board.isOccupied(vect) || board.isInJungle(vect));
+            tries++;
+        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < 2*targetArea);
 
         int min = board.getGRASS_MIN_ENERGY();
         int max = board.getGRASS_MAX_ENERGY();
-        int energy = random.nextInt(
-                board.getGRASS_MAX_ENERGY() - board.getGRASS_MIN_ENERGY()
-        ) + board.getGRASS_MIN_ENERGY();
-
-        if (board.isInJungle(vect)) {
-            energy *= board.getJUNGLE_ENERGY_FACTOR();
-        }
+        int energy = random.nextInt(max - min) + min;
 
         Grass grass = new Grass(energy, vect);
 
@@ -105,7 +106,24 @@ public class EntityManager {
     }
 
     public void spawnJungle() {
-        // TODO separate grass spawn for jungle (higher spawn frequency + grass energy)
+        Vector2D vect;
+        double tries = 0;
+        double jungleArea = board.getJUNGLE_HEIGHT()*board.getJUNGLE_WIDTH();
+
+        do {
+            int x = random.nextInt(board.getJUNGLE_WIDTH()) + board.getJUNGLE_BOTTOM_LEFT().X;
+            int y = random.nextInt(board.getJUNGLE_HEIGHT()) + board.getJUNGLE_BOTTOM_LEFT().Y;
+            vect = new Vector2D(x, y);
+            tries++;
+        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < 2*jungleArea);
+
+        int min = board.getGRASS_MIN_ENERGY();
+        int max = board.getGRASS_MAX_ENERGY();
+        int energy = (random.nextInt(max - min) + min)*board.getJUNGLE_ENERGY_FACTOR();
+
+        Grass grass = new Grass(energy, vect);
+
+        entityCollection.add(grass);
     }
 
     public void spawnStone() {
