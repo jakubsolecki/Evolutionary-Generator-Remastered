@@ -2,7 +2,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.jakubsolecki.model.*;
-import pl.jakubsolecki.service.BoardEntityCollection;
+import pl.jakubsolecki.containers.BoardEntityCollection;
 
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;

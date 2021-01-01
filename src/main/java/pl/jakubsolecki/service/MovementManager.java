@@ -1,5 +1,6 @@
 package pl.jakubsolecki.service;
 
+import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
 
 import java.util.Iterator;
@@ -39,7 +40,9 @@ public class MovementManager {
             Animal animal = (Animal) ait.next().getValue();
             Vector2D nextPos = animal.getNextPosition();
 
-            if (!entityCollection.stoneAt(nextPos)) {
+            boolean grassPresent = entityCollection.grassAt(nextPos).isPresent();
+            int entityCount = entityCollection.entitiesAt(nextPos).size();
+            if (!entityCollection.isStoneAt(nextPos) && (grassPresent && entityCount < 3) || (!grassPresent && entityCount < 2)) {
                 animal.setPosition(nextPos);
             }
         }

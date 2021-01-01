@@ -2,7 +2,7 @@ package pl.jakubsolecki.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import pl.jakubsolecki.service.BoardEntityCollection;
+import pl.jakubsolecki.containers.BoardEntityCollection;
 
 @AllArgsConstructor
 @Getter
@@ -22,7 +22,7 @@ public class WorldBoard {
     private final int GRASS_MAX_ENERGY;
     private final int JUNGLE_ENERGY_FACTOR;
 
-    private final BoardEntityCollection entityCollection;
+    private final BoardEntityCollection entityCollection; // TODO hide (do not expose via getter)
 
     public boolean isInJungle(Vector2D pos) {
         return pos.isLowerLeft(JUNGLE_TOP_RIGHT) && pos.isUpperRight(JUNGLE_BOTTOM_LEFT);
@@ -39,6 +39,10 @@ public class WorldBoard {
 
     public boolean isOccupied(Vector2D pos) {
         return entityCollection.hasKey(pos);
+    }
+
+    public boolean availableToPlace(Vector2D pos) {
+        return entityCollection.isStoneAt(pos);
     }
 
 }

@@ -1,20 +1,21 @@
 package pl.jakubsolecki.service;
 
+import lombok.RequiredArgsConstructor;
+import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
 
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Optional;
-import java.util.Random;
+import java.util.*;
 
 public class EntityManager {
 
     private final WorldBoard board;
     private final BoardEntityCollection entityCollection;
     private static final Random random = new Random();
+    private final int reproduceEnergy;
 
-    public EntityManager(WorldBoard board) {
+    public EntityManager(WorldBoard board, int reproduceEnergy) {
         this.board = board;
+        this.reproduceEnergy = reproduceEnergy;
         entityCollection = board.getEntityCollection();
     }
 
@@ -46,6 +47,41 @@ public class EntityManager {
             Animal animal = (Animal) aIt.next().getValue();
             if (!animal.isAlive()) {
                 entityCollection.remove(animal);
+            }
+        }
+    }
+    
+    public void reproduce() {
+        Iterator<Map.Entry<Vector2D, IBoardEntity>> aIt = board.getEntityCollection().animalIterator();
+
+        while (aIt.hasNext()) {
+            Animal animal = (Animal) aIt.next().getValue();
+            List<IBoardEntity> entities = board.getEntityCollection().entitiesAt(animal.getPosition());
+
+            if ((entities.size() == 3 && entities.contains(Grass.class)) ||
+                (entities.size() == 2 && !entities.contains(Grass.class))) {
+                Iterator<IBoardEntity> it = entities.iterator();
+                ArrayList<Animal> animalPair = new ArrayList<>();
+                int i = 0;
+                IBoardEntity entity;
+
+                while (it.hasNext()) {
+                    entity = it.next();
+
+                    if (entity instanceof Grass) {
+                        continue;
+                    }
+
+                    animalPair.add(i++, (Animal) entity);
+                }
+
+                Animal animalParent1 = animalPair.get(0);
+                Animal animalParent2 = animalPair.get(1);
+                if (animalParent1.getEnergy() > reproduceEnergy && animalParent2.getEnergy() > reproduceEnergy) {
+                    animalParent1.changeEnergy(-reproduceEnergy);
+                    animalParent2.changeEnergy(-reproduceEnergy);
+                    newAnimal(animalParent1.getPosition(), (animalParent1.getEnergy() + animalParent2.getEnergy())/2);
+                }
             }
         }
     }
@@ -87,14 +123,14 @@ public class EntityManager {
         double boardArea = board.getHEIGHT()*board.getWIDTH();
         double jungleArea = board.getJUNGLE_HEIGHT()*board.getJUNGLE_WIDTH();
         double regularGrassArea = boardArea - jungleArea;
-        double targetArea = (jungleArea/regularGrassArea)*boardArea;
+        double targetArea = (jungleArea/regularGrassArea)*boardArea*2;
 
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
             vect = new Vector2D(x, y);
             tries++;
-        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < 2*targetArea);
+        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < targetArea);
 
         int min = board.getGRASS_MIN_ENERGY();
         int max = board.getGRASS_MAX_ENERGY();
@@ -108,14 +144,14 @@ public class EntityManager {
     public void spawnJungle() {
         Vector2D vect;
         double tries = 0;
-        double jungleArea = board.getJUNGLE_HEIGHT()*board.getJUNGLE_WIDTH();
+        double jungleArea = (board.getJUNGLE_HEIGHT()*board.getJUNGLE_WIDTH())*2;
 
         do {
             int x = random.nextInt(board.getJUNGLE_WIDTH()) + board.getJUNGLE_BOTTOM_LEFT().X;
             int y = random.nextInt(board.getJUNGLE_HEIGHT()) + board.getJUNGLE_BOTTOM_LEFT().Y;
             vect = new Vector2D(x, y);
             tries++;
-        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < 2*jungleArea);
+        } while ((board.isOccupied(vect) || board.isInJungle(vect)) && tries < jungleArea);
 
         int min = board.getGRASS_MIN_ENERGY();
         int max = board.getGRASS_MAX_ENERGY();
@@ -128,11 +164,13 @@ public class EntityManager {
 
     public void spawnStone() {
         Vector2D vect;
+        int tries = 0;
+        int maxTries = (board.getHEIGHT()*board.getWIDTH()) / 4;
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
             vect = new Vector2D(x, y);
-        } while (board.isOccupied(vect));
+        } while (board.isOccupied(vect) && tries < maxTries);
 
         Stone stone = new Stone(vect);
 

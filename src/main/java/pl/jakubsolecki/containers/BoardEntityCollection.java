@@ -1,4 +1,4 @@
-package pl.jakubsolecki.service;
+package pl.jakubsolecki.containers;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
@@ -118,8 +118,7 @@ public class BoardEntityCollection {
         return grassMap.containsKey(pos) ? Optional.of(grassMap.get(pos)) : Optional.empty();
     }
 
-    public boolean stoneAt(Vector2D pos) {
-//        return stoneMap.containsKey(pos) ? Optional.of(stoneMap.get(pos)) : Optional.empty();
+    public boolean isStoneAt(Vector2D pos) {
         return stoneMap.containsKey(pos);
     }
 
