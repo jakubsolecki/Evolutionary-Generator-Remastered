@@ -22,7 +22,7 @@ public class EntityManager {
     public void allEat() {
         Iterator<Map.Entry<Vector2D, IBoardEntity>> aIt = entityCollection.animalIterator();
         while (aIt.hasNext()) {
-            Animal animal = (Animal) aIt.next().getValue();
+            Animal animal = (Animal) aIt.next().getValue(); // FIXME possible favoring
             Optional<Grass> opt = entityCollection.grassAt(animal.getPosition());
 
             if (opt.isPresent()) {
@@ -51,7 +51,7 @@ public class EntityManager {
         }
     }
     
-    public void reproduce() {
+    public void breed() {
         Iterator<Map.Entry<Vector2D, IBoardEntity>> aIt = board.getEntityCollection().animalIterator();
 
         while (aIt.hasNext()) {

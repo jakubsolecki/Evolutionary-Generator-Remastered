@@ -30,8 +30,8 @@ public class BoardEntityCollectionTest {
         entityCollection.add(animal);
 
         // then
-        assertTrue(entityCollection.hasKey(pos));
-        assertEquals(animal, entityCollection.entitiesAt(pos).get(0));
+        assertTrue(entityCollection.hasKey(pos)); // should not use own method to test other
+        assertEquals(animal, entityCollection.entitiesAt(pos).get(0)); // should not use own method to test other
     }
 
     @Test
@@ -196,6 +196,5 @@ public class BoardEntityCollectionTest {
         assertFalse(resList.contains(stone));
         assertEquals(3, resList.size());
     }
-
 
 }

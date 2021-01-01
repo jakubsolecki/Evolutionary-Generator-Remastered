@@ -50,19 +50,19 @@ public class Vector2D {
         return this.X >= other.X && this.Y >= other.Y;
     }
     
-    protected Vector2D translateToBoard(int width, int height) {
+    public Vector2D translateToBoard(int width, int height) {
         int newX = this.X;
         int newY = this.Y;
 
         if (this.X < 0) {
-            newX = width;
-        } else if (this.X > width) {
+            newX = width - 1;
+        } else if (this.X > width - 1) {
             newX = 0;
         }
 
         if (this.Y < 0) {
-            newY = height;
-        } else if (this.Y > height) {
+            newY = height - 1;
+        } else if (this.Y > height - 1) {
             newY = 0;
         }
 

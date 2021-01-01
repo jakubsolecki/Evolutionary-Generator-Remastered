@@ -24,15 +24,15 @@ public class Animal implements IBoardEntity {
     }
 
     public Vector2D getNextPosition() {
-        return position.add(BoardDirection.toUnitVector2D(direction));
+        return position.add(direction.toUnitVector2D());
     }
 
     public void rotateClockwise() {
-        direction = BoardDirection.nextDirection(direction);
+        direction = direction.nextDirection();
     }
 
     public void rotateCounterClockwise() {
-        direction = BoardDirection.previousDirection(direction);
+        direction = direction.previousDirection();
     }
 
     public void increaseAge() {
@@ -44,6 +44,6 @@ public class Animal implements IBoardEntity {
     }
 
     public void changeEnergy(int deltaEnergy) {
-        this.energy += energy;
+        this.energy += deltaEnergy;
     }
 }

@@ -40,6 +40,10 @@ public class MovementManager {
             Animal animal = (Animal) ait.next().getValue();
             Vector2D nextPos = animal.getNextPosition();
 
+            if (!board.isOnBoard(nextPos)) {
+                nextPos = board.covertToBoardPosition(nextPos);
+            }
+
             boolean grassPresent = entityCollection.grassAt(nextPos).isPresent();
             int entityCount = entityCollection.entitiesAt(nextPos).size();
             if (!entityCollection.isStoneAt(nextPos) && (grassPresent && entityCount < 3) || (!grassPresent && entityCount < 2)) {

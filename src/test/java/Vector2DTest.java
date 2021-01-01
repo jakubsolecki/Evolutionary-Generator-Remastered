@@ -2,8 +2,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import pl.jakubsolecki.model.Vector2D;
 
-import static org.junit.jupiter.api.Assertions.assertFalse;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 public class Vector2DTest {
@@ -50,6 +49,28 @@ public class Vector2DTest {
 
     @Test
     public void translateToBoardTest() {
-        // TODO
+        // given
+        Vector2D vect1 = new Vector2D(100, 99);
+        Vector2D vect2 = new Vector2D(99, 100);
+        Vector2D vect3 = new Vector2D(-1, 99);
+        Vector2D vect4 = new Vector2D(100, 100);
+
+        // when
+        Vector2D translatedVect1 = vect1.translateToBoard(100, 100);
+        Vector2D translatedVect2 = vect2.translateToBoard(100, 100);
+        Vector2D translatedVect3 = vect3.translateToBoard(100, 100);
+        Vector2D translatedVect4 = vect4.translateToBoard(100, 100);
+
+        // then
+        assertEquals(0, translatedVect1.X);
+        assertEquals(99, translatedVect1.Y);
+        assertEquals(99, translatedVect2.X);
+        assertEquals(0, translatedVect2.Y);
+        assertEquals(99, translatedVect3.X);
+        assertEquals(99, translatedVect3.Y);
+        assertEquals(0, translatedVect4.X);
+        assertEquals(0, translatedVect4.Y);
     }
+
+
 }

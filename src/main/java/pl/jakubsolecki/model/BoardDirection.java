@@ -17,17 +17,17 @@ public enum BoardDirection {
         return DIRECTIONS.get(random.nextInt(SIZE));
     }
 
-    public static BoardDirection nextDirection(BoardDirection currentDirection) {
-        return DIRECTIONS.get((DIRECTIONS.indexOf(currentDirection)) + 1 % DIRECTIONS.size());
+    public BoardDirection nextDirection() {
+        return DIRECTIONS.get((DIRECTIONS.indexOf(this)) + 1 % DIRECTIONS.size());
     }
 
-    public static BoardDirection previousDirection(BoardDirection currentDirection) {
-        return DIRECTIONS.get((DIRECTIONS.indexOf(currentDirection)) - 1 % DIRECTIONS.size());
+    public BoardDirection previousDirection() {
+        return DIRECTIONS.get((DIRECTIONS.indexOf(this)) - 1 % DIRECTIONS.size());
     }
 
-    public static Vector2D toUnitVector2D(BoardDirection currentDirection) {
+    public Vector2D toUnitVector2D() {
 
-        return switch (currentDirection) {
+        return switch (this) {
             case N -> new Vector2D(0, 1);
             case NE -> new Vector2D(1, 1);
             case E -> new Vector2D(1, 0);

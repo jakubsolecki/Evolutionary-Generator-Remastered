@@ -24,6 +24,7 @@ public class SimulationManager {
         entityManager.removeDeadAnimals();
         movementManager.changeAnimalsDirections();
         movementManager.moveAllAnimals();
+        entityManager.breed();
         entityManager.allEat();
         entityManager.spawnGrass();
         entityManager.spawnJungle();

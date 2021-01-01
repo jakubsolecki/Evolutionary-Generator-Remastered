@@ -32,9 +32,8 @@ public class WorldBoard {
         return pos.isLowerLeft(TOP_RIGHT) && pos.isUpperRight(BOTTOM_LEFT);
     }
 
-    public void covertToBoardPosition(Animal animal) {
-        Vector2D oldPos = animal.getPosition();
-        animal.setPosition(oldPos.translateToBoard(WIDTH, HEIGHT));
+    public Vector2D covertToBoardPosition(Vector2D oldPos) {
+        return oldPos.translateToBoard(WIDTH, HEIGHT);
     }
 
     public boolean isOccupied(Vector2D pos) {
