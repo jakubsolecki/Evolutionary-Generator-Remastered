@@ -3,10 +3,11 @@ package pl.jakubsolecki.model;
 import lombok.*;
 
 @RequiredArgsConstructor
+@Getter
 public class Animal implements IBoardEntity {
 
     @NonNull
-    @Setter(AccessLevel.PROTECTED)
+    @Setter
     private Vector2D position;
     @NonNull private int energy;
     private int age = 0;
@@ -22,10 +23,8 @@ public class Animal implements IBoardEntity {
         return position;
     }
 
-    // TODO: consider moving to movement manager
-    public void changePosition() {
-        // TODO check whether it is possible to move
-        position = position.add(BoardDirection.toUnitVector2D(direction));
+    public Vector2D getNextPosition() {
+        return position.add(BoardDirection.toUnitVector2D(direction));
     }
 
     public void rotateClockwise() {
@@ -34,10 +33,6 @@ public class Animal implements IBoardEntity {
 
     public void rotateCounterClockwise() {
         direction = BoardDirection.previousDirection(direction);
-    }
-
-    public void eat(int energy) {
-        this.energy += energy;
     }
 
     public void increaseAge() {

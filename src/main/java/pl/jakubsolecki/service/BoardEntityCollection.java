@@ -1,7 +1,7 @@
 package pl.jakubsolecki.service;
 
 import com.google.common.collect.HashMultimap;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.SetMultimap;
 import lombok.RequiredArgsConstructor;
 import pl.jakubsolecki.model.*;
 
@@ -10,7 +10,7 @@ import java.util.*;
 @RequiredArgsConstructor
 public class BoardEntityCollection {
 
-    private final Multimap<Vector2D, Animal> animalMap = HashMultimap.create();
+    private final SetMultimap<Vector2D, Animal> animalMap = HashMultimap.create();
     private final Map<Vector2D, Grass> grassMap = new HashMap<>();
     private final Map<Vector2D, Stone> stoneMap = new HashMap<>();
     private EntityIterator iterator;
@@ -118,8 +118,9 @@ public class BoardEntityCollection {
         return grassMap.containsKey(pos) ? Optional.of(grassMap.get(pos)) : Optional.empty();
     }
 
-    public Optional<Stone> stoneAt(Vector2D pos) {
-        return stoneMap.containsKey(pos) ? Optional.of(stoneMap.get(pos)) : Optional.empty();
+    public boolean stoneAt(Vector2D pos) {
+//        return stoneMap.containsKey(pos) ? Optional.of(stoneMap.get(pos)) : Optional.empty();
+        return stoneMap.containsKey(pos);
     }
 
 }

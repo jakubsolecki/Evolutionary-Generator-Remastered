@@ -50,10 +50,6 @@ public class EntityManager {
         }
     }
 
-    public void moveAnimals() {
-        // TODO
-    }
-
     public boolean spawnAnimal(int startEnergy, Vector2D pos) {
         if (board.isOccupied(pos)) {
             return false;
