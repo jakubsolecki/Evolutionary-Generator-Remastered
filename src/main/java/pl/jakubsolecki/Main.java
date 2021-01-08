@@ -19,8 +19,8 @@ public class Main extends Application {
         var simulationManager = new SimulationManager(entityManager, movementManager);
 
         Parent root = FXMLLoader.load(getClass().getResource("/view/setupView.fxml"));
-        primaryStage.setTitle("Hello World");
-        primaryStage.setScene(new Scene(root, 300, 275));
+        primaryStage.setTitle("Evolutionary Generator Remastered");
+        primaryStage.setScene(new Scene(root));
         primaryStage.show();
     }
 
