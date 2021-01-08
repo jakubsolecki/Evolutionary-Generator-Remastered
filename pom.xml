@@ -37,7 +37,7 @@
             <artifactId>guava</artifactId>
             <version>30.1-jre</version>
         </dependency>
-        <dependency>
+        <dependency> <!--TODO remove-->
             <groupId>com.google.inject</groupId>
             <artifactId>guice</artifactId>
             <version>4.2.3</version>

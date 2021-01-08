@@ -2,12 +2,14 @@ package pl.jakubsolecki.containers;
 
 import com.google.common.collect.HashMultimap;
 import com.google.common.collect.SetMultimap;
+import com.google.inject.Singleton;
 import lombok.RequiredArgsConstructor;
 import pl.jakubsolecki.model.*;
 import pl.jakubsolecki.model.interfaces.IBoardEntity;
 
 import java.util.*;
 
+@Singleton // FIXME ?
 @RequiredArgsConstructor
 public class BoardEntityCollection {
 

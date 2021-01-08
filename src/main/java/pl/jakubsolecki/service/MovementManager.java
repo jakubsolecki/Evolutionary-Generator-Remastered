@@ -1,5 +1,6 @@
 package pl.jakubsolecki.service;
 
+import lombok.Setter;
 import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
 import pl.jakubsolecki.model.interfaces.IBoardEntity;
@@ -10,14 +11,10 @@ import java.util.Random;
 
 public class MovementManager {
 
-    private final WorldBoard board;
-    private final BoardEntityCollection entityCollection;
+    @Setter
+    private WorldBoard board;
+    private BoardEntityCollection entityCollection;
     private static final Random random = new Random();
-
-    public MovementManager(WorldBoard board) {
-        this.board = board;
-        entityCollection = board.getEntityCollection();
-    }
 
     public void changeAnimalsDirections() {
         Iterator<Map.Entry<Vector2D, IBoardEntity>> ait = entityCollection.animalIterator();

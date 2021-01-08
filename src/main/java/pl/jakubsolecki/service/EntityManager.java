@@ -1,6 +1,6 @@
 package pl.jakubsolecki.service;
 
-import com.google.inject.Inject;
+import lombok.Setter;
 import pl.jakubsolecki.containers.BoardEntityCollection;
 import pl.jakubsolecki.model.*;
 import pl.jakubsolecki.model.interfaces.IBoardEntity;
@@ -9,16 +9,16 @@ import java.util.*;
 
 public class EntityManager {
 
-    private final WorldBoard board;
-    private final BoardEntityCollection entityCollection;
+    private WorldBoard board;
+    private BoardEntityCollection entityCollection;
+    @Setter
+    private int reproduceEnergy;
     private static final Random random = new Random();
-    private final int reproduceEnergy;
 
-    @Inject
-    public EntityManager(WorldBoard board, int reproduceEnergy) {
+
+    public void setBoard(WorldBoard board) {
         this.board = board;
-        this.reproduceEnergy = reproduceEnergy;
-        entityCollection = board.getEntityCollection();
+        this.entityCollection = board.getEntityCollection();
     }
 
     public void allEat() {
@@ -107,6 +107,7 @@ public class EntityManager {
 
     public void spawnAnimal(int startEnergy) {
         Vector2D vect;
+
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
@@ -176,6 +177,7 @@ public class EntityManager {
         Vector2D vect;
         int tries = 0;
         int maxTries = (board.getHEIGHT()*board.getWIDTH()) / 4;
+
         do {
             int x = random.nextInt(board.getWIDTH());
             int y = random.nextInt(board.getHEIGHT());
